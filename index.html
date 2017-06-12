@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>inView javascript plugin</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script src="js/inView.js"></script>
+
+
+	<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+	<div class="container">
+		<h1>inView javascript plugin</h1>
+
+		<div style="height: 100vh;background-color: yellow;padding: 20px;">
+			<p><b>Scroll page to view plugin! This div just for indent.</b></p>
+		</div>
+
+		<div class="demo" id="demo1" style="height: 200px; background-color: red;">
+			<p>DEMO 1</p>
+		</div>
+		<script>
+			var demo1 = new inView(
+				$("#demo1"),
+				{
+					minHeightPercent: 40,
+					onInView: function ($el) {
+						$el.css('background-color', 'green');
+					},
+					offInView: function ($el) {
+						$el.css('background-color', 'red');
+					}
+				}
+			);
+		</script>
+
+		<div class="demo2-wrapper demo">
+			<img data-lazyload="http://placehold.it/230x300/673ab7/ffffff" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="" class="demo2" width="240" height="300">
+			<img data-lazyload="http://placehold.it/230x300/00bcd4/ffffff" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="" class="demo2" width="240" height="300">
+		</div>
+
+		<script>
+			//auto lazyLoad
+			var demo2 = new inView(".demo2");
+
+			/*
+			 {
+			 minHeightPercent: 10,
+			 once: true,
+			 onInView: function ($el) {
+			 $el.attr("src", $el.data('lazyload'));
+			 }
+			 }
+			 */
+		</script>
+
+	</div>
+</body>
+</html>

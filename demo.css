@@ -1,0 +1,26 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.container {
+    width: 500px;
+    margin: 0 auto;
+}
+
+[in-view="true"] {
+    background-color: green;
+}
+[in-view="false"] {
+    background-color: red;
+}
+
+.demo {
+    border: 1px solid #f0f0f0;
+    padding: 20px;
+}
+
+.demo3-wrapper {
+    display: flex;
+    justify-content: space-between;
+}

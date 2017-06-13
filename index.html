@@ -25,11 +25,11 @@
 				$("#demo1"),
 				{
 					minHeightPercent: 40,
-					onInView: function ($el) {
-						$el.css('background-color', 'green');
+					onInView: function (self) {
+						self.$el.css('background-color', 'green');
 					},
-					offInView: function ($el) {
-						$el.css('background-color', 'red');
+					offInView: function (self) {
+						self.$el.css('background-color', 'red');
 					}
 				}
 			);
@@ -45,6 +45,16 @@
 			var demo2 = new inView(".demo2");
 
 			/*
+
+			 // lazyload
+			 if (self.params.lazyLoad && self.$el.data("lazyload")) {
+			 if (self.$el.prop("tagName") == 'IMG')
+			 self.$el.attr("src", self.$el.data("lazyload"))
+			 else
+			 self.$el.css('background-image','url('+$el.data("lazyload")+')')
+			 }
+
+
 			 {
 			 minHeightPercent: 10,
 			 once: true,

@@ -8,13 +8,15 @@
 		return typeof a !== 'undefined' && a !== null;
 	};
 
-	window.inView = function (selector, params) {
-		if (!ifDefined(selector)) { console.warn("Undefined selector"); return {};}
+	window.inView = function ($el, params) {
+		if ( !ifDefined($el) || $.type($el)!== "object" || !$el.length) { console.warn('inView: $el not valid: '+$el); return {};}
 
 		var params = params || {},
 			self = this;
 
-		self.selector = selector;
+		self.$el = $el;
+		self.inView = undefined;
+		self.countViews = 0;
 		self.params = $.extend({
 			minHeightPercent: 0,
 			minWidthPercent: 0,
@@ -23,27 +25,18 @@
 			onInView: function () {},
 			offInView: function () {}
 		}, params);
-		self.getElement = function () {
-			return $.type(self.selector) === "string" ? $(self.selector) : self.selector;
-		};
 
 		self.checkInView = function () {
-			var $elements = self.getElement();
-			if (!ifDefined($elements) || $elements.length) return;
-
-			$elements.each(function (index, item) {
-				var $el = $(item);
-				var elInView;
-				if (self.params.once && !!$el.data("countViews")) return;
+				if (self.params.once && !!self.countViews) return;
 
 				var elementBounds = {
-					offsetTop: $el.offset().top,
-					offsetLeft: $el.offset().left,
-					outerHeight: $el.outerHeight(),
-					outerWidth: $el.outerWidth(),
+					offsetTop: self.$el.offset().top,
+					offsetLeft: self.$el.offset().left,
+					outerHeight: self.$el.outerHeight(),
+					outerWidth: self.$el.outerWidth(),
 				};
 
-				//считаем сколько видно по высоте
+				//сколько видно по высоте
 				self.inViewHeight = 0;
 				self.inViewHeightPercent = 0;
 				self.inViewY = (window.scrollY + window.innerHeight > elementBounds.offsetTop) && (window.scrollY < elementBounds.offsetTop + elementBounds.outerHeight);
@@ -55,7 +48,7 @@
 					self.inViewHeightPercent = self.inViewHeight/elementBounds.outerHeight*100;
 				}
 
-				//считаем сколько видно по ширине
+				//сколько видно по ширине
 				self.inViewWidth = 0;
 				self.inViewWidthPercent = 0;
 				self.inViewX = (window.scrollX + window.innerWidth > elementBounds.offsetLeft) && (window.scrollX < elementBounds.offsetLeft + elementBounds.outerWidth);
@@ -67,34 +60,23 @@
 					self.inViewWidthPercent = self.inViewWidth/elementBounds.outerWidth*100;
 				}
 
-				elInView = (self.inViewHeightPercent - self.params.minHeightPercent) > 0 && (self.inViewWidthPercent - self.params.minWidthPercent) > 0;
+				self.inView = (self.inViewHeightPercent > self.params.minHeightPercent) && (self.inViewWidthPercent > self.params.minWidthPercent);
 
-				if (elInView){
-					self.params.onInView($el, self);
-					$el.trigger('inView');
+				if (self.inView){
+					self.params.onInView(self);
+					self.$el.trigger('inView');
 
-					// lazyload
-					if (self.params.lazyLoad && $el.data("lazyload")) {
-						if ($el.prop("tagName") == 'IMG')
-							$el.attr("src", $el.data("lazyload"))
-						else
-							$el.css('background-image','url('+$el.data("lazyload")+')')
-					}
-
-					$el.data("countViews", +$el.data("countViews")+1);
+					self.countViews++;
 				} else {
-					self.params.offInView($el, self);
-					$el.trigger('offView');
+					self.params.offInView(self);
+					self.$el.trigger('offView');
 				}
-			});
-
-
 		};
 
 		//init
 		(function () {
 			self.checkInView();
-			$(window).on('scroll load', self.checkInView);
+			$(window).on('resize scroll load', self.checkInView);
 		}());
 
 		$.fn.inView = function(){

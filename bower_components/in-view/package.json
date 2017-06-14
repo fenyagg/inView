@@ -1,5 +1,5 @@
 {
-  "name": "citrus.inview",
+  "name": "in-view",
   "version": "1.0.0",
   "description": "jquery plugin watch view object and call events and callbacks",
   "main": "inView.js",

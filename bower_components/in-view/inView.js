@@ -55,8 +55,8 @@
 								(window.scrollY + window.innerHeight > elementBounds.calcOffsetTop) &&
 								(window.scrollY < elementBounds.calcOffsetBot);
 				if (self.inViewY) {
-					var topCoord = Math.max(window.scrollY, elementBounds.calcOffsetTop);
-					var botCoord = Math.min(window.scrollY + window.innerHeight,elementBounds.calcOffsetBot);
+					var topCoord = window.scrollY > elementBounds.calcOffsetTop ? window.scrollY : elementBounds.calcOffsetTop;
+					var botCoord = window.scrollY + window.innerHeight < elementBounds.calcOffsetBot ? (window.scrollY + window.innerHeight) : elementBounds.calcOffsetBot;
 
 					self.inViewHeight = botCoord - topCoord;
 					self.inViewHeightPercent = self.inViewHeight/elementBounds.outerHeight*100;
@@ -68,8 +68,8 @@
 				self.inViewWidthPercent = 0;
 				self.inViewX = (window.scrollX + window.innerWidth > elementBounds.offsetLeft) && (window.scrollX < elementBounds.offsetLeft + elementBounds.outerWidth);
 				if (self.inViewX) {
-					var leftCoord = Math.max(window.scrollX, elementBounds.offsetLeft);
-					var rightCoord = Math.min((window.scrollX + window.innerWidth), (elementBounds.offsetLeft + elementBounds.outerWidth));
+					var leftCoord = window.scrollX > elementBounds.offsetLeft ? window.scrollX : elementBounds.offsetLeft;
+					var rightCoord = window.scrollX + window.innerWidth < elementBounds.offsetLeft + elementBounds.outerWidth ? (window.scrollX + window.innerWidth) : (elementBounds.offsetLeft + elementBounds.outerWidth);
 
 					self.inViewWidth = rightCoord - leftCoord;
 					self.inViewWidthPercent = self.inViewWidth/elementBounds.outerWidth*100;

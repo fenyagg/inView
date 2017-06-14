@@ -1,5 +1,5 @@
 {
-  "name": "citrus.inview",
+  "name": "in-view",
   "main": "inView.js",
   "version": "1.0.0",
   "homepage": "https://fenyagg.github.io/inView/",
@@ -21,8 +21,6 @@
     "tests",
     "*.css",
     "*.html",
-    "*.md",
-    "gulpfile.js",
-    "package.json"
+    "*.md"
   ]
 }

@@ -29,7 +29,7 @@
 				left: 0, // в планах
 				right: 0 // в планах
 			},
-			once: false,
+			once: true,
 			onInView: function () {},
 			offInView: function () {}
 		}, params);

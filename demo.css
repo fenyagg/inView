@@ -20,7 +20,10 @@
     padding: 20px;
 }
 
-.demo3-wrapper {
+.demo2-wrapper {
     display: flex;
     justify-content: space-between;
+}
+.demo2-wrapper .demo2 {
+    width: calc(50% - 20px);
 }

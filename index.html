@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title>inView javascript plugin</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-	<script src="js/inView.js"></script>
+	<script src="inView.js"></script>
 
 
 	<link rel="stylesheet" href="demo.css">
@@ -24,45 +24,33 @@
 			var demo1 = new inView(
 				$("#demo1"),
 				{
-					minHeightPercent: 40,
 					onInView: function (self) {
-						self.$el.css('background-color', 'green');
+						console.log('видно');
+						self.$el.css('background-color', 'green')
+								.html("видно");
 					},
 					offInView: function (self) {
-						self.$el.css('background-color', 'red');
+						console.log('не видно');
+						self.$el.css('background-color', 'red')
+								.html("не видно");
+					},
+					offset: {
+						top: 80,
+						bottom: 80,
 					}
 				}
 			);
 		</script>
 
 		<div class="demo2-wrapper demo">
+
 			<img data-lazyload="http://placehold.it/230x300/673ab7/ffffff" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="" class="demo2" width="240" height="300">
-			<img data-lazyload="http://placehold.it/230x300/00bcd4/ffffff" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="" class="demo2" width="240" height="300">
+			<div data-lazyload="http://placehold.it/230x300/00bcd4/ffffff" class="demo2" width="240" height="300" ></div>
 		</div>
 
 		<script>
-			//auto lazyLoad
-			var demo2 = new inView(".demo2");
-
-			/*
-
-			 // lazyload
-			 if (self.params.lazyLoad && self.$el.data("lazyload")) {
-			 if (self.$el.prop("tagName") == 'IMG')
-			 self.$el.attr("src", self.$el.data("lazyload"))
-			 else
-			 self.$el.css('background-image','url('+$el.data("lazyload")+')')
-			 }
-
-
-			 {
-			 minHeightPercent: 10,
-			 once: true,
-			 onInView: function ($el) {
-			 $el.attr("src", $el.data('lazyload'));
-			 }
-			 }
-			 */
+			//lazyload
+			$(".demo2").lazyLoadInView();
 		</script>
 
 	</div>

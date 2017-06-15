@@ -130,7 +130,7 @@
 					$(item).css('background-image','url('+lazyLoadSrc+')')
 				}
 			});
-
+			$(item).removeAttr("data-lazyload");
 			inViewGroup.push(new inView($(item), params));
 		});
 		return inViewGroup;

@@ -42,8 +42,14 @@
 					offsetTop: self.$el.offset().top,
 					offsetLeft: self.$el.offset().left,
 					outerHeight: self.$el.outerHeight(),
-					outerWidth: self.$el.outerWidth(),
+					outerWidth: self.$el.outerWidth()
 				};
+
+				var windowBounds = {
+					scrollY: window.scrollY || document.documentElement.scrollTop,
+					scrollX: window.scrollX || document.documentElement.scrollLeft
+				};
+
 				elementBounds.calcOffsetTop = elementBounds.offsetTop + self.params.offset.top;
 				elementBounds.calcOffsetBot = elementBounds.offsetTop + elementBounds.outerHeight - self.params.offset.bottom;
 
@@ -52,11 +58,12 @@
 				self.inViewHeightPercent = 0;
 				self.inViewY = (self.params.offset.top + self.params.offset.bottom < elementBounds.outerHeight) &&
 								(self.params.offset.top + self.params.offset.bottom < window.innerHeight) &&
-								(window.scrollY + window.innerHeight > elementBounds.calcOffsetTop) &&
-								(window.scrollY < elementBounds.calcOffsetBot);
+								(windowBounds.scrollY + window.innerHeight > elementBounds.calcOffsetTop) &&
+								(windowBounds.scrollY < elementBounds.calcOffsetBot);
+
 				if (self.inViewY) {
-					var topCoord = Math.max(window.scrollY, elementBounds.calcOffsetTop);
-					var botCoord = Math.min(window.scrollY + window.innerHeight,elementBounds.calcOffsetBot);
+					var topCoord = Math.max(windowBounds.scrollY, elementBounds.calcOffsetTop);
+					var botCoord = Math.min(windowBounds.scrollY + window.innerHeight,elementBounds.calcOffsetBot);
 
 					self.inViewHeight = botCoord - topCoord;
 					self.inViewHeightPercent = self.inViewHeight/elementBounds.outerHeight*100;
@@ -66,10 +73,10 @@
 				//сколько видно по ширине
 				self.inViewWidth = 0;
 				self.inViewWidthPercent = 0;
-				self.inViewX = (window.scrollX + window.innerWidth > elementBounds.offsetLeft) && (window.scrollX < elementBounds.offsetLeft + elementBounds.outerWidth);
+				self.inViewX = (windowBounds.scrollX + window.innerWidth > elementBounds.offsetLeft) && (windowBounds.scrollX < elementBounds.offsetLeft + elementBounds.outerWidth);
 				if (self.inViewX) {
-					var leftCoord = Math.max(window.scrollX, elementBounds.offsetLeft);
-					var rightCoord = Math.min((window.scrollX + window.innerWidth), (elementBounds.offsetLeft + elementBounds.outerWidth));
+					var leftCoord = Math.max(windowBounds.scrollX, elementBounds.offsetLeft);
+					var rightCoord = Math.min((windowBounds.scrollX + window.innerWidth), (elementBounds.offsetLeft + elementBounds.outerWidth));
 
 					self.inViewWidth = rightCoord - leftCoord;
 					self.inViewWidthPercent = self.inViewWidth/elementBounds.outerWidth*100;
